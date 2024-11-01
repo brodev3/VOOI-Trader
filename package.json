@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "csv-parser": "^3.0.0",
+    "dotenv": "^16.4.5",
+    "input": "^1.0.1",
+    "mongoose": "^8.7.3",
+    "telegram": "^2.26.2"
+  }
+}
