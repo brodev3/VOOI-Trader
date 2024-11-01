@@ -1,5 +1,6 @@
 const utils = require("../utils/utils");
 const telegram = require("./telegram");
+const { socksDispatcher } = require("fetch-socks");
 
 const log = require("../utils/logger");
 

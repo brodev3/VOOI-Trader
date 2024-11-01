@@ -19,8 +19,13 @@ function sleep(ms) {
 let claim = async (Account) => {
     try {
         await app.login(Account);
-        const status = await app.autotrade(Account);
+        let status = await app.autotrade(Account);
         if (status === null) throw new Error("Autotrade returned null");
+        // if (status === null) {
+        //     status = {
+        //         timeLeftInSeconds: 0
+        //     }
+        // }
         if (status.timeLeftInSeconds == 0) {
             if (status.status == "finished") {
                 const result = await app.claimAutotrade(Account, status.autoTradeId);

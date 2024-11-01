@@ -1,0 +1,21 @@
+{
+    "account1": { 
+      "api_id": 1111111, 
+      "api_hash": "12sd24gt2fd32vs3c4", 
+      "session": "...", 
+      "proxy": {
+        "ip": "11.222.33.444", 
+        "port": 11111, 
+        "username": "username",
+        "password": "password",
+        "socksType": 5,
+        "timeout": 2
+      }
+    },
+    "account2": { 
+      "api_id": 1111111, 
+      "api_hash": "12sd24gt2fd32vs3c4", 
+      "session": "...", 
+      "proxy": false
+    }
+  }
