@@ -3,13 +3,15 @@ const config = require('../../input/config');
 const mongoose = require('mongoose');
 const { walletSchema, logSchema, projectSchema } = require('./schema');
 
-if (!config.mongoDB.use) return;
+// if (!config.mongoDB.use) return;
 
 const WalletDB = mongoose.model('Wallet', walletSchema);
 const Log = mongoose.model('Log', logSchema);
 const Project = mongoose.model('Project', projectSchema);
 
 async function ensureCollectionsExist() {
+    if (!config.mongoDB.use) return;
+
     const collections = await mongoose.connection.db.listCollections().toArray();
     const collectionNames = collections.map(col => col.name);
     if (!collectionNames.includes('wallets')) throw new Error("Collection 'wallets' not found");
@@ -40,6 +42,8 @@ async function addLog(wallet, level, action, message, stackTrace) {
 };
 
 async function ensureProjectExists() {
+    if (!config.mongoDB.use) return;
+
     const project_name = config.mongoDB.project_name;
     if (!project_name) throw new Error("project_name is not specified in config.js");
     const existingProject = await Project.findOne({ name: project_name });
@@ -56,6 +60,8 @@ async function ensureProjectExists() {
 };
 
 async function startApp() {
+    if (!config.mongoDB.use) return;
+
     await mongoose.connect(config.mongoDB.URI, { ssl: true, autoIndex: true });
     log.info('Connected to MongoDB [1/3]');
     await ensureCollectionsExist();
@@ -66,6 +72,8 @@ async function startApp() {
 
 async function ensureByAddress(wallet) {
     try {
+        if (!config.mongoDB.use) return;
+
         const existingWallet = await WalletDB.findOne({ address: wallet.address });
 
         if (!existingWallet) {
@@ -94,6 +102,8 @@ async function ensureByAddress(wallet) {
 
 async function addProjectToWallet(wallet, projectName) {
     try {
+        if (!config.mongoDB.use) return;
+
         const project = await Project.findOne({ name: projectName });
         if (!project) throw new Error(`Project '${projectName}' not found`);
 
@@ -124,6 +134,8 @@ async function addProjectToWallet(wallet, projectName) {
 
 async function updateWalletBalance(wallet, network, token, balance) {
     try {
+        if (!config.mongoDB.use) return;
+
         const walletData = await WalletDB.findOne({ address: wallet.address });
 
         if (!walletData.balances.has(network)) {
@@ -155,6 +167,8 @@ async function updateWalletBalance(wallet, network, token, balance) {
 
 async function updateMetric(wallet, metricName, value) {
     try {
+        if (!config.mongoDB.use) return;
+
         const project_name = config.mongoDB.project_name;
         const setOptions = { 
             'projects.$.metrics.last_updated': new Date(),

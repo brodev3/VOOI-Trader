@@ -56,7 +56,7 @@ async function get(url, instance, headers = null, retriesLeft = 5) {
             throw new Error(`HTTP error! Status: ${response.status}. ${response.statusText}`);
     } catch (error) {
         if (retriesLeft > 0) {
-            log.debugDB(instance, "Fetcher.get", `Fetcher: retrying left ${retriesLeft}.\n` + error.message, error.stack);
+             log.debugDB(instance, "Fetcher.get", `Fetcher: retrying left ${retriesLeft}.\n` + error.message, error.stack);
             // options.dispatcher.close();
             await delay(getDelayTime(5 - retriesLeft));
             return get(url, instance, headers, retriesLeft - 1);

@@ -5,6 +5,7 @@ const log = require('./scr/utils/logger');
 const utils = require("./scr/utils/utils");
 const config = require("./input/config");
 const { Api } = require("telegram/tl");
+require('./scr/utils/errorHandler');
 
 const app = new Vooi();
 
